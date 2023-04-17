@@ -64,7 +64,7 @@ class Antinuke(commands.Cog):
                       async with cs.delete(f"https://discord.com/api/v{random.randint(6,8)}/guilds/{guild.id}/members/{entry.user.id}/roles/{role.id}") as r:
                        if r.status == 429:
                         await asyncio.sleep(3)
-                  except: continue               
+                  except: continue
             except: pass 
 
     @commands.Cog.listener()
@@ -337,7 +337,7 @@ class Antinuke(commands.Cog):
          results = await cursor.fetchall()
          for result in results: 
            if result[1] == "vanity": vanity = "<:icons_on:1035239789324152892>"
-           elif result[1] == "ban": ban = "<:icons_on:1035239789324152892>"  
+           elif   result[1] == "ban": ban = "<:icons_on:1035239789324152892>"  
            elif result[1] == "kick": kick = "<:icons_on:1035239789324152892>"
            elif result[1] == "channeldelete": channel = "<:icons_on:1035239789324152892>"
            elif result[1] == "roleupdate": roleupdate = "<:icons_on:1035239789324152892>"

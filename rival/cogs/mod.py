@@ -233,41 +233,41 @@ class Mod(commands.Cog):
 	@commands.command(name='imagemute', aliases=['imgmute','imute','im'], description="mute or unmute a member from sending images", brief='member', usage='```Swift\nSyntax: !imagemute <user>\nExample: !imagemute @cop#0001```', extras={'perms':'Moderate Members'})
 	@commands.has_permissions(moderate_members=True)
 	async def imagemute(self, ctx, *, member:discord.Member):
-		if member == ctx.guild.owner:
-			return await util.send_error(ctx, f"you cannot `image mute` the owner")
-		if ctx.author != ctx.guild.owner:
-			if member.top_role.position >= ctx.author.top_role.position:
-				return await util.send_error(ctx, f"you cannot `image mute` {member.mention}")
-		if member in ctx.channel.overwrites:
-			try:
-				await ctx.channel.set_permissions(member, overwrite=None, reason=f"image mute undone by {ctx.author}")
-				return await util.send_good(ctx, f"{member.mention} can now `send images` again")
-			except:
-				return await util.send_error(ctx, f"unable to undo `image mute` on {member.mention}")
-		else:
-			try: 
-				await ctx.channel.set_permissions(member, overwrite=discord.PermissionOverwrite(embed_links=False,attach_files=False), reason=f"image muted by {ctx.author}")
-				return await util.send_good(ctx, f"successfully `image muted` {member.mention}")
-			except:
-				return await util.send_error(ctx, f"unable to `image mute` {member.mention}")
+			if member == ctx.guild.owner:
+				return await util.send_error(ctx, f"you cannot `image mute` the owner")
+			if ctx.author != ctx.guild.owner:
+				if member.top_role.position >= ctx.author.top_role.position:
+					return await util.send_error(ctx, f"you cannot `image mute` {member.mention}")
+			if member in ctx.channel.overwrites:
+				try:
+					await ctx.channel.set_permissions(member, overwrite=None, reason=f"image mute undone by {ctx.author}")
+					return await util.send_good(ctx, f"{member.mention} can now `send images` again")
+				except:
+					return await util.send_error(ctx, f"unable to undo `image mute` on {member.mention}")
+			else:
+				try: 
+					await ctx.channel.set_permissions(member, overwrite=discord.PermissionOverwrite(embed_links=False,attach_files=False), reason=f"image muted by {ctx.author}")
+					return await util.send_good(ctx, f"successfully `image muted` {member.mention}")
+				except:
+					return await util.send_error(ctx, f"unable to `image mute` {member.mention}")
 
-	async def ban_dm(self, ctx, member, reason):
-		msg=await self.bot.db.execute("""SELECT message FROM ban_message WHERE guild_id = %s""", ctx.guild.id, one_value=True)
-		if msg:
-			try:
-				msg=msg.replace("{moderator}",str(ctx.author))
-				msg=msg.replace("{reason}",reason)
-				params=await util.embed_replacement(ctx.author,ctx.guild,msg)
-				message = await util.to_object(ctx,member,ctx.guild,params)
-			except Exception as e:
-				print(e)
-				pass
-		else:
-			try:
-				guild=ctx.guild
-				await user.send(embed=discord.Embed(title='Banned', color=self.bad).add_field(name='You have been banned in', value=guild.name, inline=True).add_field(name='Moderator', value=ctx.author, inline=True).add_field(name='Reason', value=reason, inline=True))
-			except:
-				pass
+		async def ban_dm(self, ctx, member, reason):
+			msg=await self.bot.db.execute("""SELECT message FROM ban_message WHERE guild_id = %s""", ctx.guild.id, one_value=True)
+			if msg:
+				try:
+					msg=msg.replace("{moderator}",str(ctx.author))
+					msg=msg.replace("{reason}",reason)
+					params=await util.embed_replacement(ctx.author,ctx.guild,msg)
+					message = await util.to_object(ctx,member,ctx.guild,params)
+				except Exception as e:
+					print(e)
+					pass
+			else:
+				try:
+					guild=ctx.guild
+					await user.send(embed=discord.Embed(title='Banned', color=self.bad).add_field(name='You have been banned in', value=guild.name, inline=True).add_field(name='Moderator', value=ctx.author, inline=True).add_field(name='Reason', value=reason, inline=True))
+				except:
+					pass
 
 	@commands.hybrid_command(name='ban', aliases=['deport'], with_app_command=True, description='Ban a user', brief='member/user, reason[optional]', usage="```Swift\nSyntax: !ban <user> <reason>\nExample: !ban @cop racism```",extras={'perms': 'ban members'})
 	@commands.has_permissions(ban_members=True)

@@ -193,7 +193,6 @@ class vmbuttons(discord.ui.View):
                     emb = discord.Embed(color=Colors.yellow, description=f"{Emojis.Emojis.warninging} {interaction.user.mention}: You are not in a voice channel created by the bot")
                     await interaction.response.send_message(embed=emb, view=None, ephemeral=True) 
                     return
-
              await cursor.execute("SELECT * FROM vcs WHERE voice = {} AND user_id = {}".format(interaction.user.voice.channel.id, interaction.user.id))
              che = await cursor.fetchone()
              if che is None:
