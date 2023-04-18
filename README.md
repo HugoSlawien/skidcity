@@ -1,5 +1,5 @@
-# DISCORD BOT ARCHIVE
+# DISCORD SKID CITY
 
-discord bots that has been leaked, i credit the posters. sorry if they arent the ORIGINAL ones but thats where I got it from.
+discord bots that has been leaked, some are unknown asf but this is recently updated.
 
 I DO NOT CONDONE IN ANY ACTIVITY OF BLATANT SKIDDING
